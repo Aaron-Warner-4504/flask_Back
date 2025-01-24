@@ -7,11 +7,11 @@ import os
 app = Flask(__name__)
 
 # Load the trained Keras model
-model_path = 'C:/Users/prana/Desktop/PBL/flask_Back/keras_model.h5'  # Path to your exported .h5 file
+model_path = 'keras_model.h5'  # Path to your exported .h5 file
 model = tf.keras.models.load_model(model_path)
 
 # Load class labels from labels.txt
-labels_file_path = 'C:/Users/prana/Desktop/PBL/flask_Back/labels.txt'  # Path to labels.txt
+labels_file_path = 'labels.txt'  # Path to labels.txt
 if not os.path.exists(labels_file_path):
     raise FileNotFoundError(f"Labels file not found at {labels_file_path}")
 
