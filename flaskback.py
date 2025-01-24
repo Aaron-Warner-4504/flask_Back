@@ -7,11 +7,11 @@ import os
 app = Flask(__name__)
 
 # Load the trained Keras model
-model_path = 'keras_model.h5'  # Path to your exported .h5 file
+model_path = 'C:/Users/prana/Desktop/PBL/flask_Back/keras_model.h5'  # Path to your exported .h5 file
 model = tf.keras.models.load_model(model_path)
 
 # Load class labels from labels.txt
-labels_file_path = 'labels.txt'  # Path to labels.txt
+labels_file_path = 'C:/Users/prana/Desktop/PBL/flask_Back/labels.txt'  # Path to labels.txt
 if not os.path.exists(labels_file_path):
     raise FileNotFoundError(f"Labels file not found at {labels_file_path}")
 
@@ -37,27 +37,22 @@ def predict(image_path):
     predicted_class = class_labels[predicted_index]  # Get class name from labels
     return predicted_class, confidence
 
-@app.route('/predict', methods=['GET','POST'])
+@app.route('/predict', methods=['POST'])
 def predict_disease():
     # Check if an image is part of the request
     if 'file' not in request.files:
-        return jsonify({"error": "No file part"}), 400
+        return "No file part", 400
 
     file = request.files['file']
 
     if file.filename == '':
-        return jsonify({"error": "No selected file"}), 400
+        return "No selected file", 400
 
     # Predict the class
     predicted_class, confidence = predict(file)
 
-    # Send prediction result as JSON
-    result = {
-        "predicted_class": predicted_class,
-        "confidence": f"{confidence * 100:.2f}%"
-    }
-
-    return jsonify(result)
+    # Return prediction result as plain text
+    return f"Predicted Class: {predicted_class} (Confidence: {confidence * 100:.2f}%)"
 
 # Specify port and host for Render
 if __name__ == '__main__':
