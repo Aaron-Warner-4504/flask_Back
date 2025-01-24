@@ -37,7 +37,7 @@ def predict(image_path):
     predicted_class = class_labels[predicted_index]  # Get class name from labels
     return predicted_class, confidence
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET','POST'])
 def predict_disease():
     # Check if an image is part of the request
     if 'file' not in request.files:
